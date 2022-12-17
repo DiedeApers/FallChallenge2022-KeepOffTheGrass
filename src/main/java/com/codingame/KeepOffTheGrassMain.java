@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import com.codingame.gameengine.runner.MultiplayerGameRunner;
+import com.codingame.gameengine.runner.simulate.GameResult;
 import com.google.common.io.Files;
 
 public class KeepOffTheGrassMain {
@@ -11,37 +12,17 @@ public class KeepOffTheGrassMain {
     public static void main(String[] args) throws IOException, InterruptedException {
 
         MultiplayerGameRunner gameRunner = new MultiplayerGameRunner();
-//         gameRunner.setSeed(-8358938852454912011l);
-        gameRunner.addAgent("python starterAIs/Starter.py", "JulienBot");
+
+        //gameRunner.setSeed(-8358938852454912011l);
+        
+        gameRunner.addAgent("./build/output.exe", "JulienBot");
         gameRunner.addAgent("python starterAIs/Starter.py", "InsectBot");
 
         //gameRunner.start();
-        com.codingame.gameengine.runner.simulate.GameResult result = gameRunner.simulate();
-        //System.out.println(result);
-        System.out.println(result.scores); 
+        GameResult result = gameRunner.simulate();
+        System.out.println("Agents: " + result.agents); 
+        System.out.println("Scores: " + result.scores); 
+        System.out.println("Summaries: " + result.summaries); 
     }
 
-    private static String compile(String botFile) throws IOException, InterruptedException {
-
-        File outFolder = Files.createTempDir();
-
-        System.out.println("Compiling Boss.java... " + botFile);
-        Process compileProcess = Runtime.getRuntime()
-            .exec(new String[] { "bash", "-c", "javac " + botFile + " -d " + outFolder.getAbsolutePath() });
-        compileProcess.waitFor();
-        return "java -cp " + outFolder + " Player";
-    }
-
-    private static String[] compileTS(String botFile) throws IOException, InterruptedException {
-
-        System.out.println("Compiling ... " + botFile);
-
-        Process compileProcess = Runtime.getRuntime().exec(
-            new String[] { "bash", "-c", "tsc --target ES2018 --inlineSourceMap --types ./typescript/readline/ "
-                + botFile + " --outFile /tmp/Boss.js" }
-        );
-        compileProcess.waitFor();
-
-        return new String[] { "bash", "-c", "node -r ./typescript/polyfill.js /tmp/Boss.js" };
-    }
 }
