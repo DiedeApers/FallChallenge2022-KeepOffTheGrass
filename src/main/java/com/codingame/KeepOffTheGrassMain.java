@@ -16,7 +16,8 @@ public class KeepOffTheGrassMain {
         //gameRunner.setSeed(-8358938852454912011l);
         
         gameRunner.addAgent("./build/output.exe", "JulienBot");
-        gameRunner.addAgent("python starterAIs/Starter.py", "InsectBot");
+        gameRunner.addAgent("./build/output.exe", "JulienBot2");
+        //gameRunner.addAgent("python starterAIs/Starter.py", "InsectBot");
 
         //gameRunner.start();
         GameResult result = gameRunner.simulate();
