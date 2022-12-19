@@ -34,9 +34,10 @@ public class Referee extends AbstractReferee {
             game.init();
             sendGlobalInfo();
 
-            gameManager.setFrameDuration(500);
+            gameManager.setFrameDuration(1000000);
             gameManager.setMaxTurns(Config.MAX_TURNS);
             gameManager.setTurnMaxTime(50);
+            gameManager.setFirstTurnMaxTime(25000);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println("Referee failed to initialize");
